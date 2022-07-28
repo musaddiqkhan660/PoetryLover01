@@ -1,2 +1,1 @@
-# PoetryLover01
-# PoetryLover01
+#Poetry Lover Application
