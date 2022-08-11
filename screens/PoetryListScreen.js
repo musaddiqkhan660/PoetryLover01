@@ -1,15 +1,20 @@
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import Poetry from "../data/Poetry";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import HeaderButton from "../components/UI/HeaderButton";
+
+import { useSelector } from "react-redux";
+
 const PoetryListScreen = (props) => {
+  const poetries = useSelector((state) => state.poetries.allPoetries);
   const poetIDModel = props.navigation.getParam("poetID");
-  const poetIDPoetry = Poetry.find((p) => p.poetId === poetIDModel);
+  const poetIDPoetry = poetries.find((p) => p.poetId === poetIDModel);
 
   return (
     <View style={{ overflow: "hidden" }}>
       <ScrollView>
         <View style={styles.screen}>
-          {Poetry.map(
+          {poetries.map(
             (item, index) =>
               poetIDPoetry.poetId === item.poetId && (
                 <View key={index} style={styles.cart_of_poetry}>
@@ -36,7 +41,20 @@ const PoetryListScreen = (props) => {
 PoetryListScreen.navigationOptions = (navData) => {
   const poetName = navData.navigation.getParam("poetTitle");
 
-  return { headerTitle: poetName };
+  return {
+    headerTitle: poetName,
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Home"
+          iconName={Platform.OS === "android" ? "md-home" : "ios-home"}
+          onPress={() => {
+            navData.navigation.navigate("PoetScreen");
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 const styles = StyleSheet.create({
   screen: { marginBottom: 20 },

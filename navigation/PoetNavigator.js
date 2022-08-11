@@ -5,9 +5,10 @@ import PoetListScreen from "../screens/PoetListScreen";
 import PoetryListScreen from "../screens/PoetryListScreen";
 
 import AboutScreen from "../WasteScreen/About";
-import { Platform } from "react-native";
+import { Platform, Dimensions } from "react-native";
 
 import Colors from "../constants/Colors";
+import ContentComponent from "../components/ContentComponent";
 
 const PoetNavigator = createStackNavigator(
   {
@@ -19,18 +20,27 @@ const PoetNavigator = createStackNavigator(
   {
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: Platform.OS === "android" ? Colors.primary : "",
+        backgroundColor: Platform.OS === "android" ? "" : "",
       },
-      headerTintColor: Platform.OS === "android" ? "white" : Colors.primary,
+      headerTintColor: Platform.OS === "android" ? "" : Colors.primary,
     },
   }
 );
 
+const BasicNavigator = createStackNavigator({
+  About: { screen: AboutScreen },
+});
 const PoetDrawer = createDrawerNavigator(
   {
-    PoetNav: PoetNavigator,
-    AboutScreen: AboutScreen,
+    AllPoets: PoetNavigator,
+    About: BasicNavigator,
   },
-  { defaultNavigationOptions: {} }
+  {
+    initialRouteName: "AllPoets",
+    contentComponent: ContentComponent,
+    drawerWidth: Dimensions.get("window").width,
+    drawerPosition: "left",
+    drawerBackgroundColor: "transparent",
+  }
 );
 export default createAppContainer(PoetDrawer);

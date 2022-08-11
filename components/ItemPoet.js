@@ -13,7 +13,6 @@ const ItemPoet = (props) => {
       <View style={styles.btnView}>
         <TouchableNativeFeedback>
           <Button
-            style={styles.btnStyle}
             title={name}
             onPress={props.onPressEvent}
           />
@@ -25,6 +24,5 @@ const ItemPoet = (props) => {
 const styles = StyleSheet.create({
   container: { flex: 1, },
   btnView: { margin: 5,},
-  btnStyle: {},
 });
 export default ItemPoet;

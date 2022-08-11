@@ -6,7 +6,10 @@ import HeaderView from "../components/HeaderView";
 import ItemPoet from "../components/ItemPoet";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/UI/HeaderButton";
+import { useSelector } from "react-redux";
 const PoetListScreen = (props) => {
+  const POETS = useSelector((state) => state.poets.allPoets);
+
   const _renderItem = (itemData) => {
     const name = itemData.item.poetName;
 
@@ -28,7 +31,7 @@ const PoetListScreen = (props) => {
       <View style={styles.flatScreen}>
         <FlatList
           numColumns={2}
-          data={POET}
+          data={POETS}
           keyExtractor={(item, index) => index.toString()}
           key={Math.random()}
           renderItem={_renderItem.bind(this)}
@@ -41,7 +44,7 @@ const PoetListScreen = (props) => {
 PoetListScreen.navigationOptions = (navData) => {
   return {
     headerTitle: "All Poets",
-    headerLeft: () => {
+    headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Menu"
@@ -50,15 +53,15 @@ PoetListScreen.navigationOptions = (navData) => {
             navData.navigation.toggleDrawer();
           }}
         />
-      </HeaderButtons>;
-    },
+      </HeaderButtons>
+    ),
   };
 };
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
     alignItems: "center",
   },
   flatScreen: {
@@ -66,7 +69,5 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 });
-
-
 
 export default PoetListScreen;
